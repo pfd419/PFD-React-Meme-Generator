@@ -69,7 +69,7 @@ function Toolbar() {
     <nav>
       <ul>
         <li>
-          <Link to="/">Display Data</Link>
+          <Link to="/" style={selectedTheme}>Display Data</Link>
         </li>
         <li>
           <Link to="/input" style={selectedTheme}>Enter Data</Link>
