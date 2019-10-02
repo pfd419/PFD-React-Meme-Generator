@@ -11,7 +11,7 @@ export default function ProfilePage(props) {
     const swCharacter = Object.entries(apiData).length && user.character
         ? apiData.results[user.character].name
         : null;
-
+        
     return (
         <div>
             <section>

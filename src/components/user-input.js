@@ -1,5 +1,5 @@
 import React, { useContext, useReducer, useEffect } from "react";
-import { UserContext, user } from '../contexts/UserContext';
+import { UserContext } from '../contexts/UserContext';
 
 function setUserReducer(state, value) {
     const newState = Object.assign({}, state);
@@ -60,8 +60,9 @@ function UserInput(props) {
                 <strong>Star Wars Character: </strong>
                 <select
                     onChange={(x => { setUserCharacter(x.target.value) })}
-                    value={signedInUser ? signedInUser.character : ''}>
-                    <option>Please select...</option>
+                    value={signedInUser ? signedInUser.character : ''}
+                >
+                    <option value="">Please select...</option>
                     {optionItems}
                 </select>
             </section>
