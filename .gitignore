@@ -1,3 +1,8 @@
-node_modules/
+/build/asset-manifest.json
+/build/index.html
+/build/precache-manifest.*.js
+build/service-worker.js
+/build/static/
+/node_modules/.cache/
 
 debug.log
