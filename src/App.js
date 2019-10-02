@@ -1,4 +1,4 @@
-import React, { useState, useContext } from 'react';
+import React, { useState, useContext, useEffect } from 'react';
 import { Route, Link, BrowserRouter as Router, Switch } from 'react-router-dom'
 
 import { UserContext, user } from './contexts/UserContext';
@@ -7,7 +7,7 @@ import { ThemeContext, themes } from './contexts/ThemeContext';
 import ProfilePage from './pages/profile-page';
 import InputPage from './pages/input-page';
 
-import './App.css';
+import './css/App.css';
 
 let defaultUser = user;
 let defaultTheme = themes.light;
@@ -33,24 +33,42 @@ export default function App() {
     }
   });
 
-  return (
+  const [loading, setLoading] = useState(false);
+  const [apiData, setApiData] = useState({});
+
+  useEffect(() => {
+    function setApiStatus(data) {
+      setApiData(data);
+      setLoading(Object.entries(data).length === 0);
+    }
+
+    if (!Object.entries(apiData).length) {
+      setApiStatus(apiData);
+      //fetch("http://api.openweathermap.org/data/2.5/forecast?id=524901&APPID=a1b9fd2f4fff11555097c46194a1a853")
+      fetch("https://swapi.co/api/people/")
+        .then(response => response.json())
+        .then(data => setApiStatus(data))
+    }
+  });
+
+  return loading ? (<div>Loading...</div>) : (
     <ThemeContext.Provider value={theme}>
       <UserContext.Provider value={signedInUser}>
         <Router>
-          <Layout />
+          <Layout apiData={apiData} />
         </Router>
       </UserContext.Provider>
     </ThemeContext.Provider>
   );
 }
 
-function Layout() {
+function Layout(props) {
   const { selectedTheme } = useContext(ThemeContext);
   return (
     <div style={selectedTheme}>
       <Header />
       <Toolbar />
-      <Content />
+      <Content apiData={props.apiData} />
     </div>
   );
 }
@@ -80,12 +98,13 @@ function Toolbar() {
 }
 
 // A component may consume multiple contexts
-function Content() {
+function Content(props) {
+  const { apiData } = props;
   return (
     <div style={{ paddingLeft: "25px" }}>
       <Switch>
-        <Route exact path="/" component={ProfilePage} />
-        <Route path="/input" component={InputPage} />
+        <Route exact path="/" render={props => <ProfilePage {...props} apiData={apiData} />} />
+        <Route path="/input" render={props => <InputPage {...props} apiData={apiData} />} />
       </Switch>
     </div>
   );

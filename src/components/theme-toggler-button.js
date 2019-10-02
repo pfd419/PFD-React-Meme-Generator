@@ -56,6 +56,7 @@ export default function ThemeTogglerButton() {
 
     return (
         <section>
+            <strong>Theme: </strong>
             <button onClick={setLight} style={selectedTheme}>Set Light</button>
             <button onClick={setDark} style={selectedTheme}>Set Dark</button>
             <button onClick={toggle} style={selectedTheme}>

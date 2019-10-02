@@ -7,10 +7,10 @@ function handleOnSubmit(event) {
     event.preventDefault();
 }
 
-export default function InputPage() {
+export default function InputPage(props) {
     return (
         <form onSubmit={handleOnSubmit}>
-            <UserInput />
+            <UserInput {...props}/>
             <br />
             <ThemeTogglerButton />
         </form>
