@@ -2,10 +2,7 @@ import React, { useContext, useReducer, useEffect } from "react";
 import { UserContext } from '../contexts/UserContext';
 
 function setUserReducer(state, value) {
-    const newState = Object.assign({}, state);
-    newState[value.type] = value.value;
-
-    return newState;
+    return {...state, [value.type]: value.value};
 }
 
 function useSetUser({ reducer = (s, a) => a.changes } = {}) {

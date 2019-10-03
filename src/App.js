@@ -44,7 +44,6 @@ export default function App() {
 
     if (!Object.entries(apiData).length) {
       setApiStatus(apiData);
-      //fetch("http://api.openweathermap.org/data/2.5/forecast?id=524901&APPID=a1b9fd2f4fff11555097c46194a1a853")
       fetch("https://swapi.co/api/people/")
         .then(response => response.json())
         .then(data => setApiStatus(data))
