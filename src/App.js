@@ -1,5 +1,6 @@
 import React, { useState, useContext, useEffect } from 'react';
-import { Route, Link, BrowserRouter as Router, Switch } from 'react-router-dom'
+import { Route, Link, BrowserRouter as Router, Switch } from 'react-router-dom';
+import { createStore } from 'redux';
 
 import { UserContext, user } from './contexts/UserContext';
 import { ThemeContext, themes } from './contexts/ThemeContext';
@@ -12,6 +13,8 @@ import './css/App.css';
 let defaultUser = user;
 let defaultTheme = themes.light;
 
+
+
 export default function App() {
   const [signedInUser, setSignedInUser] = useState({
     user: defaultUser,
@@ -19,7 +22,7 @@ export default function App() {
       setSignedInUser({
         user: value,
         setUser: signedInUser.setUser
-      })
+      });
     }
   });
 
@@ -29,7 +32,7 @@ export default function App() {
       setTheme({
         selectedTheme: value,
         setSelectedTheme: theme.setSelectedTheme
-      })
+      });
     }
   });
 
