@@ -12,10 +12,11 @@ import './css/App.css';
 let defaultTheme = themes.light;
 
 const mapStateToProps = state => ({
-  user: state.user
+  user: state.user,
+  apiData: state.apiData
 });
 
-function App() {
+function App(props) {
   const [theme, setTheme] = useState({
     selectedTheme: defaultTheme,
     setSelectedTheme: (value) => {
@@ -27,16 +28,14 @@ function App() {
   });
 
   const [loading, setLoading] = useState(false);
-  const [apiData, setApiData] = useState({});
-
   useEffect(() => {
     function setApiStatus(data) {
-      setApiData(data);
+      props.dispatch({ type: 'SETAPIDATA', apiName: 'characters', data: data.results });
       setLoading(Object.entries(data).length === 0);
     }
 
-    if (!Object.entries(apiData).length) {
-      setApiStatus(apiData);
+    if (!Object.entries(props.apiData).length) {
+      setApiStatus(props.apiData);
       fetch("https://swapi.co/api/people/")
         .then(response => response.json())
         .then(data => setApiStatus(data))
@@ -46,7 +45,7 @@ function App() {
   return loading ? (<div>Loading...</div>) : (
     <ThemeContext.Provider value={theme}>
       <Router>
-        <Layout apiData={apiData} />
+        <Layout />
       </Router>
     </ThemeContext.Provider>
   );
@@ -58,7 +57,7 @@ function Layout(props) {
     <div style={selectedTheme}>
       <Header />
       <Toolbar />
-      <Content apiData={props.apiData} />
+      <Content />
     </div>
   );
 }
@@ -89,12 +88,11 @@ function Toolbar() {
 
 // A component may consume multiple contexts
 function Content(props) {
-  const { apiData } = props;
   return (
     <div style={{ paddingLeft: "25px" }}>
       <Switch>
-        <Route exact path="/" render={props => <ProfilePage {...props} apiData={apiData} />} />
-        <Route path="/input" render={props => <InputPage {...props} apiData={apiData} />} />
+        <Route exact path="/" component={ProfilePage} />
+        <Route path="/input" component={InputPage} />
       </Switch>
     </div>
   );

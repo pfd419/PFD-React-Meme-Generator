@@ -1,7 +1,8 @@
 import { combineReducers } from 'redux';
 import user from './user';
+import apiData from './apiData';
 
-// TODO: This set up to add additional reducers
 export default combineReducers({
-    user
+    user,
+    apiData
 });

@@ -1,15 +1,13 @@
 import React from "react";
 import { connect } from 'react-redux';
 
-
-
 function UserInput(props) {
     const setUser = (name, value) => {
-        props.dispatch({ type: 'SET', name: name, value: value });
+        props.dispatch({ type: 'SETUSER', name: name, value: value });
     };
 
     const { apiData } = props;
-    const characters = apiData && Object.entries(apiData).length ? apiData.results : [];
+    const characters = apiData.characters && Object.entries(apiData.characters).length ? apiData.characters : [];
 
     let optionItems = characters.map((character, x) =>
         <option key={x} value={x}>{character.name}</option>
@@ -22,15 +20,15 @@ function UserInput(props) {
                 <input
                     type="text"
                     name="name"
-                    onChange={(x => { setUser(x.target.name, x.target.value) })}
+                    onChange={(x => setUser(x.target.name, x.target.value))}
                     value={props.user.name} />
             </section>
             <section>
                 <strong>Star Wars Character: </strong>
                 <select
                     name="character"
-                    onChange={(x => { setUser(x.target.name, x.target.value) })}
-                    value={props.character}
+                    onChange={(x => setUser(x.target.name, x.target.value))}
+                    value={props.user.character}
                 >
                     <option value="">Please select...</option>
                     {optionItems}
@@ -41,7 +39,8 @@ function UserInput(props) {
 }
 
 const mapStateToProps = state => ({
-    user: state.user
+    user: state.user,
+    apiData: state.apiData
 });
 
 export default connect(mapStateToProps)(UserInput);

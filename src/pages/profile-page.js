@@ -6,8 +6,8 @@ function ProfilePage(props) {
     const themeContext = useContext(ThemeContext);
     const { selectedTheme } = themeContext;
     const { user, apiData } = props;
-    const swCharacter = Object.entries(apiData).length && user.character
-        ? apiData.results[user.character].name
+    const swCharacter = apiData.characters && Object.entries(apiData.characters).length && user.character
+        ? apiData.characters[user.character].name
         : null;
 
     return (
@@ -26,7 +26,8 @@ function ProfilePage(props) {
 }
 
 const mapStateToProps = state => ({
-    user: state.user
+    user: state.user,
+    apiData: state.apiData
 });
 
 export default connect(mapStateToProps)(ProfilePage);
