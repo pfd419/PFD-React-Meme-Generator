@@ -1,47 +1,19 @@
-import React, { useContext, useReducer, useEffect } from "react";
-import { UserContext } from '../contexts/UserContext';
+import React from "react";
+import { connect } from 'react-redux';
 
-function setUserReducer(state, value) {
-    return {...state, [value.type]: value.value};
-}
 
-function useSetUser({ reducer = (s, a) => a.changes } = {}) {
-    const userContext = useContext(UserContext);
-
-    const [signedInUser, dispatch] = useReducer(
-        (state, value) => {
-            const changes = setUserReducer(state, value);
-            return reducer(state, { ...value, changes })
-        },
-        userContext.user
-    );
-
-    const setUserName = (value) => dispatch({ type: 'name', value: value });
-    const setUserCharacter = (value) => dispatch({ type: 'character', value: value });
-
-    return { signedInUser, setUserName, setUserCharacter }
-}
 
 function UserInput(props) {
-    const userContext = useContext(UserContext);
-    const { signedInUser, setUserName, setUserCharacter } = useSetUser({
-        reducer(signedInUser, value) {
-            return value.changes;
-        }
-    });
+    const setUser = (name, value) => {
+        props.dispatch({ type: 'SET', name: name, value: value });
+    };
+
     const { apiData } = props;
     const characters = apiData && Object.entries(apiData).length ? apiData.results : [];
 
     let optionItems = characters.map((character, x) =>
         <option key={x} value={x}>{character.name}</option>
     );
-
-    // Pass new state via context when selectedTheme has changed
-    useEffect(() => {
-        if (userContext.user !== signedInUser) {
-            userContext.setUser(signedInUser);
-        }
-    });
 
     return (
         <div>
@@ -50,14 +22,15 @@ function UserInput(props) {
                 <input
                     type="text"
                     name="name"
-                    onChange={(x => { setUserName(x.target.value) })}
-                    value={signedInUser ? signedInUser.name : ''} />
+                    onChange={(x => { setUser(x.target.name, x.target.value) })}
+                    value={props.user.name} />
             </section>
             <section>
                 <strong>Star Wars Character: </strong>
                 <select
-                    onChange={(x => { setUserCharacter(x.target.value) })}
-                    value={signedInUser ? signedInUser.character : ''}
+                    name="character"
+                    onChange={(x => { setUser(x.target.name, x.target.value) })}
+                    value={props.character}
                 >
                     <option value="">Please select...</option>
                     {optionItems}
@@ -67,5 +40,8 @@ function UserInput(props) {
     );
 }
 
+const mapStateToProps = state => ({
+    user: state.user
+});
 
-export default UserInput;
+export default connect(mapStateToProps)(UserInput);

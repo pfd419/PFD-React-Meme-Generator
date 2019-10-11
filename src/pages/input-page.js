@@ -14,7 +14,6 @@ export default function InputPage(props) {
             <br />
             <ThemeTogglerButton />
         </form>
-    )
-
+    );
 }
 

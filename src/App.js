@@ -1,8 +1,7 @@
 import React, { useState, useContext, useEffect } from 'react';
 import { Route, Link, BrowserRouter as Router, Switch } from 'react-router-dom';
-import { createStore } from 'redux';
+import { connect } from 'react-redux';
 
-import { UserContext, user } from './contexts/UserContext';
 import { ThemeContext, themes } from './contexts/ThemeContext';
 
 import ProfilePage from './pages/profile-page';
@@ -10,22 +9,13 @@ import InputPage from './pages/input-page';
 
 import './css/App.css';
 
-let defaultUser = user;
 let defaultTheme = themes.light;
 
+const mapStateToProps = state => ({
+  user: state.user
+});
 
-
-export default function App() {
-  const [signedInUser, setSignedInUser] = useState({
-    user: defaultUser,
-    setUser: (value) => {
-      setSignedInUser({
-        user: value,
-        setUser: signedInUser.setUser
-      });
-    }
-  });
-
+function App() {
   const [theme, setTheme] = useState({
     selectedTheme: defaultTheme,
     setSelectedTheme: (value) => {
@@ -55,11 +45,9 @@ export default function App() {
 
   return loading ? (<div>Loading...</div>) : (
     <ThemeContext.Provider value={theme}>
-      <UserContext.Provider value={signedInUser}>
-        <Router>
-          <Layout apiData={apiData} />
-        </Router>
-      </UserContext.Provider>
+      <Router>
+        <Layout apiData={apiData} />
+      </Router>
     </ThemeContext.Provider>
   );
 }
@@ -80,7 +68,7 @@ function Header() {
     <header>
       <h1>Paul's Test App</h1>
     </header>
-  )
+  );
 }
 
 function Toolbar() {
@@ -96,7 +84,7 @@ function Toolbar() {
         </li>
       </ul>
     </nav>
-  )
+  );
 }
 
 // A component may consume multiple contexts
@@ -111,3 +99,5 @@ function Content(props) {
     </div>
   );
 }
+
+export default connect(mapStateToProps)(App);

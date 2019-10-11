@@ -2,12 +2,12 @@ import React from "react";
 
 
 // Signed-in user context
-export const user = {
+export const initialUser = {
     name: 'Guest',
     id: 1
 }
 
 export const UserContext = React.createContext({
-    user: user   //default Value
+    user: initialUser   //default Value
 });
   
