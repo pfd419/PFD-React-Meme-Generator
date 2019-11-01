@@ -20,3 +20,15 @@
 .App-link {
   color: #09d3ac;
 }
+
+section {
+  line-height: 27px;
+}
+
+label span {
+  display: inline-block;
+  width: 155px;
+  font-weight: bold;
+  text-align: right;
+  margin-right: 10px;
+}

@@ -1,4 +1,5 @@
 import React, { useContext, useReducer, useEffect } from "react";
+import { Button } from 'react-bootstrap';
 import { ThemeContext, themes } from '../contexts/ThemeContext';
 
 function toggleThemeReducer(state, action) {
@@ -22,7 +23,6 @@ function toggleThemeReducer(state, action) {
 
 function useToggleTheme({ reducer = (s, a) => a.changes } = {}) {
     const themeContext = useContext(ThemeContext);
-
     const [selectedTheme, dispatch] = useReducer(
         (state, action) => {
             const changes = toggleThemeReducer(state, action);
@@ -30,7 +30,6 @@ function useToggleTheme({ reducer = (s, a) => a.changes } = {}) {
         },
         themeContext.selectedTheme
     );
-
     const toggle = () => dispatch({ type: "toggle" });
     const setLight = () => dispatch({ type: "light" });
     const setDark = () => dispatch({ type: "dark" });
@@ -57,11 +56,9 @@ export default function ThemeTogglerButton() {
     return (
         <section>
             <strong>Theme: </strong>
-            <button onClick={setLight} style={selectedTheme}>Set Light</button>
-            <button onClick={setDark} style={selectedTheme}>Set Dark</button>
-            <button onClick={toggle} style={selectedTheme}>
-                Toggle Theme
-            </button>
+            <Button onClick={setLight} style={selectedTheme}>Set Light</Button>
+            <Button onClick={setDark} style={selectedTheme}>Set Dark</Button>
+            <Button onClick={toggle} style={selectedTheme}>Toggle Theme</Button>
         </section>
     );
 }

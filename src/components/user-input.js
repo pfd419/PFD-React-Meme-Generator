@@ -1,40 +1,56 @@
-import React from "react";
+import React, { useState } from "react";
+import { Button } from 'react-bootstrap';
 import { connect } from 'react-redux';
 
+import { saveProfileData } from '../actions'
+
 function UserInput(props) {
-    const setUser = (name, value) => {
-        props.dispatch({ type: 'SETUSER', name: name, value: value });
-    };
-
-    const { apiData } = props;
+    const { apiData, user } = props;
+    const [userForm, setUserForm] = useState(user);
     const characters = apiData.characters && Object.entries(apiData.characters).length ? apiData.characters : [];
-
     let optionItems = characters.map((character, x) =>
         <option key={x} value={x}>{character.name}</option>
     );
 
+    const handleUserFormChanges = (event) => {
+        event.preventDefault();     // prevent form submit on carriage return
+
+        const { name, value } = event.target;
+        setUserForm({ ...userForm, [name]: value });
+    }
+
+    function handleOnSubmit(event) {
+        event.preventDefault();
+
+        saveProfileData({...props, userForm: userForm});
+    }
+
     return (
-        <div>
+        <form onSubmit={handleOnSubmit}>
             <section>
-                <strong>User Name: </strong>
+                <label><span>User Name: </span></label>
                 <input
                     type="text"
                     name="name"
-                    onChange={(x => setUser(x.target.name, x.target.value))}
-                    value={props.user.name} />
+                    onChange={handleUserFormChanges}
+                    value={userForm.name} />
             </section>
             <section>
-                <strong>Star Wars Character: </strong>
+                <label><span>Star Wars Character: </span></label>
                 <select
                     name="character"
-                    onChange={(x => setUser(x.target.name, x.target.value))}
-                    value={props.user.character}
+                    onChange={handleUserFormChanges}
+                    value={userForm.character}
                 >
                     <option value="">Please select...</option>
                     {optionItems}
                 </select>
             </section>
-        </div>
+            <section>
+                <label><span></span></label>
+                <Button type="submit" onClick={handleOnSubmit}>Submit User Data</Button>
+            </section>
+        </form>
     );
 }
 

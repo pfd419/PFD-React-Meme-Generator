@@ -13,9 +13,9 @@ function ProfilePage(props) {
     return (
         <div>
             <section>
-                <strong>User Name:</strong> {user.name}
+                {user.name && <label><span>User Name: </span></label>} {user.name}
                 <br />
-                <strong>Star Wars Character:</strong> {swCharacter}
+                {swCharacter && <label><span>Star Wars Character:</span></label>} {swCharacter}
             </section>
             <br />
             <section>

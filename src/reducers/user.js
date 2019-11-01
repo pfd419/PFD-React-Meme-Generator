@@ -4,12 +4,13 @@ let defaultUser = initialUser;
 
 const user = (state = defaultUser, action) => {
     switch (action.type) {
+        case 'SETUSERVALUE':
+            return { ...state, [action.name]: action.value };
         case 'SETUSER':
-            return {...state, [action.name]: action.value};
+            return action.user;
         default:
             return state;
     }
 }
 
 export default user;
-  
