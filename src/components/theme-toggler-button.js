@@ -46,12 +46,12 @@ export default function ThemeTogglerButton() {
         }
     });
 
-    // Pass new state via context when selectedTheme has changed
+    // Pass new theme selection via context when selectedTheme has changed
     useEffect(() => {
         if (themeContext.selectedTheme !== selectedTheme) {
             themeContext.setSelectedTheme(selectedTheme);
         }
-    });
+    }, [themeContext, selectedTheme]);
 
     return (
         <section>

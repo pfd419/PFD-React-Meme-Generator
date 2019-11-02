@@ -4,7 +4,7 @@ let defaultUser = initialUser;
 
 const user = (state = defaultUser, action) => {
     switch (action.type) {
-        case 'SETUSERVALUE':
+        case 'SETUSERPROP':
             return { ...state, [action.name]: action.value };
         case 'SETUSER':
             return action.user;

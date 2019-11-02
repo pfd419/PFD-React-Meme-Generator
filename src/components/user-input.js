@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { Button } from 'react-bootstrap';
 import { connect } from 'react-redux';
 
-import { saveProfileData } from '../actions'
+import { saveProfileData } from '../actions';
 
 function UserInput(props) {
     const { apiData, user } = props;
