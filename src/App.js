@@ -7,7 +7,7 @@ import ShowImage from './pages/ShowImage';
 
 import './css/App.css';
 
-const mapStateToProps = state => ({ ...state });
+export const mapStateToProps = state => ({ ...state });
 
 const App = props => {
   return (

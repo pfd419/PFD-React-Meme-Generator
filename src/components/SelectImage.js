@@ -22,6 +22,7 @@ const SelectImage = props => {
 
   useEffect(
     () => {
+      // This liMarquee jquery plugin, necessary includes in index.html
       /*global $*/
       $(".imgSelect").liMarquee({
         direction: 'left',

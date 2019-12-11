@@ -4,7 +4,9 @@ const defaultState = {
     loading: true,
     imageUrl: "",
     imageTextTop: "Paul",
-    imageTextBottom: "D'Ambra"
+    imageTextBottom: "D'Ambra",
+    fontSize: 4,
+    fontColor: "white"
 };
 
 const stateReducer = (state = defaultState, action) => {

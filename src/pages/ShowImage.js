@@ -18,11 +18,11 @@ const ShowImage = props => {
 
     const placeImage = useCallback(
         async () => {
-            const svgCreated = d3.select("#meme")[0][0].childNodes.length > 0;
+            const svgCreated = d3.select("#meme").select("svg")[0][0];
             if (!svgCreated) {
                 let img = await getImageMeta(props.imageUrl);
                 const { height, width } = img;
-                const svg = d3 
+                const svg = d3
                     .select("#meme")
                     .append("svg")
                     .attr("width", width)
@@ -31,7 +31,7 @@ const ShowImage = props => {
                 const imgSvg = svg.append("svg:image").attr("xlink:href", props.imageUrl);
                 const imgSvgTop = imgSvg.node().getBoundingClientRect().top;
 
-                d3 
+                d3
                     .select("#meme")
                     .append("text")
                     .attr("class", "meme")
@@ -39,9 +39,9 @@ const ShowImage = props => {
                     .style("width", width + "px")
                     .style("height", height / 2 + "px")
                     .style("top", imgSvgTop + "px")
-                    .style("align-items", "flex-start");
+                    .style("align-items", "flex-start")
 
-                d3 
+                d3
                     .select("#meme")
                     .append("text")
                     .attr("class", "meme")
@@ -52,10 +52,16 @@ const ShowImage = props => {
                     .style("align-items", "flex-end")
             }
 
-            d3.select("#imageTextTop").text(props.imageTextTop);
-            d3.select("#imageTextBottom").text(props.imageTextBottom);
+            d3.select("#imageTextTop")
+                .style("font-size", props.fontSize + "em")
+                .style("color", props.fontColor)
+                .text(props.imageTextTop);
+            d3.select("#imageTextBottom")
+                .style("font-size", props.fontSize + "em")
+                .style("color", props.fontColor)
+                .text(props.imageTextBottom);
         },
-        [props.imageUrl, props.imageTextTop, props.imageTextBottom]
+        [props.imageUrl, props.imageTextTop, props.imageTextBottom, props.fontSize, props.fontColor]
     );
 
     useEffect(
@@ -72,6 +78,7 @@ const ShowImage = props => {
     return (
         <div>
             <div id="meme" />
+            <br/>
             <TextSelectors {...props} />
         </div>
     );
