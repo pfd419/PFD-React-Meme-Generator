@@ -1,0 +1,41 @@
+.imgSelect {
+    height: 100px !important;
+    width: 100%;
+    line-height: 100px;
+    text-align: center;  
+    border: 1px solid black;
+}
+.imgSelect .str_item {
+    font-size:0;
+    line-height:0;
+}
+.imgSelect img { opacity:0.8 }
+.imgSelect img:hover { opacity:1 }
+.imgSelect.str_wrap.str_active {
+    background:#fff;
+}
+
+.meme {
+    position: absolute;
+    display: flex;
+    justify-content: center;
+    color: white;
+    font-family: impact, sans-serif;
+    font-size: 4em;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    text-shadow:
+        2px 2px 0 #000,
+        -2px -2px 0 #000,
+        2px -2px 0 #000,
+        -2px 2px 0 #000,
+        0 2px 0 #000,
+        2px 0 0 #000,
+        0 -2px 0 #000,
+        -2px 0 0 #000,
+        2px 2px 5px #000;
+    text-align: center;
+}
+
+
+            
