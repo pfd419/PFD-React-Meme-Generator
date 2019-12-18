@@ -28,7 +28,11 @@ const ShowImage = props => {
                     .attr("width", width)
                     .attr("height", height);
 
-                const imgSvg = svg.append("svg:image").attr("xlink:href", props.imageUrl);
+                const imgSvg = svg
+                    .append("svg:image")
+                    .attr("xlink:href", props.imageUrl)
+                    .attr("width", width + "px")
+                    .attr("height", height + "px");
                 const imgSvgTop = imgSvg.node().getBoundingClientRect().top;
 
                 d3
@@ -78,7 +82,7 @@ const ShowImage = props => {
     return (
         <div>
             <div id="meme" />
-            <br/>
+            <br />
             <TextSelectors {...props} />
         </div>
     );
